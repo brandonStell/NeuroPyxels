@@ -386,7 +386,7 @@ def train_quality(dp, unit, period_m=[0,20],
                   use_or_operator = True,
                   violations_ms = 0.8, fp_threshold = 0.05, fn_threshold = 0.05,
                   again = False, save = True, verbose = False, plot_debug = False,
-                  enforced_rp = 0):
+                  enforced_rp = 0, axis=None):
 
     """
     Subselect spike times which meet two criteria:
@@ -627,7 +627,7 @@ def train_quality(dp, unit, period_m=[0,20],
             plot_fp_fn_rates(unit_train, period_s, unit_amp, good_spikes_m,
                      fp_toplot, fn_toplot, chunk_fp_t, chunk_fn_t,
                      fp_threshold, fn_threshold,
-                     good_fp_start_end, good_fn_start_end, title)
+                     good_fp_start_end, good_fn_start_end, title, axis=axis)
 
         return good_spikes_m, good_fp_start_end, good_fn_start_end
     
@@ -641,7 +641,7 @@ def train_quality(dp, unit, period_m=[0,20],
             plot_fp_fn_rates(unit_train, period_s, unit_amp, good_spikes_m,
                      fp_toplot, fn_toplot, chunk_fp_t, chunk_fn_t,
                      fp_threshold, fn_threshold,
-                     None, None, title)
+                     None, None, title, axis=axis)
             
         return good_spikes_m, [0], [0]
 
@@ -669,7 +669,7 @@ def trn_filtered(dp, unit, period_m=[0,20],
                   violations_ms = 0.8, fp_threshold = 0.05, fn_threshold=0.05,
                   use_consecutive = False, consecutive_n_seconds = 180,
                   again = False, save = True, verbose = False, plot_debug = False,
-                  enforced_rp=0):
+                  enforced_rp=0, axis=None):
     f"""
     Returns spike times (in sample) meeting the false positive and false negative criteria.
     Mainly wrapper of train_quality().
@@ -696,7 +696,7 @@ def trn_filtered(dp, unit, period_m=[0,20],
     good_spikes_m, good_fp_start_end, good_fn_start_end = train_quality(dp, unit, period_m,
                     fp_chunk_span, fp_chunk_size, fn_chunk_span, fn_chunk_size, use_or_operator,
                     violations_ms, fp_threshold, fn_threshold, again, save, verbose, plot_debug,
-                    enforced_rp=enforced_rp)
+                    enforced_rp=enforced_rp, axis=axis)
 
     # use spike times themselves to define beginning and end of good Sections
     # as the FP and FN sections do not necessarily overlap
